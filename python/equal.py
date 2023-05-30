@@ -3,16 +3,12 @@ AudioSegment.converter = "C:\\ffmpeg\\bin\\ffmpeg.exe"
 AudioSegment.ffmpeg = "C:\\ffmpeg\\bin\\ffmpeg.exe"
 AudioSegment.ffprobe = "C:\\ffmpeg\\bin\\ffprobe.exe"
 
-
 import argparse
 
 parser = argparse.ArgumentParser(description='Описание программы')
 parser.add_argument('my_array', nargs=7, type=int, help='Массив из 7 элементов')
-
 parser.add_argument('my_array2', nargs=2, type=int, help='Массив из 2 элементов')
-
 parser.add_argument('my_array3', nargs=1, type=str, help='тип аудио')
-
 
 args1 = parser.parse_args().my_array
 args2 = parser.parse_args().my_array2
@@ -28,8 +24,6 @@ def match_target_dBFS(sound, target_dBFS):
     return sound.apply_gain(dBFS)
 
 equalizer = [100, 500, 3000, 5000, 7500, 10000]
-# data =      [0,  5,  0,   0,    -50 ,  -50,  -50]
-
 data = args1
 
 file_path = "./python/sound.mp3"
@@ -74,47 +68,14 @@ result = result.overlay(filter_5, 0)
 result = result.overlay(filter_6, 0)
 result = result.overlay(filter_7, 0)
 
-
 input_file = "./python/sound.mp3"
 output_format = args3[0]
-
-
 
 begin_cut = args2[0]
 end_cut = args2[1]
 
-
 result = result[begin_cut * 1000:-end_cut * 1000]
 
-
 result.export(f"./python/result.{output_format}", format=output_format)
-
-
-# Loading the Libraries
-from scipy.io.wavfile import read
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Read the Audiofile
-samplerate, data = read(f"./python/result.{output_format}")
-# Frame rate for the Audio
-print(samplerate)
-
-# Duration of the audio in Seconds
-duration = len(data)/samplerate
-print("Duration of Audio in Seconds", duration)
-print("Duration of Audio in Minutes", duration/60)
-
-time = np.arange(0,duration,1/samplerate)
-
-# Plotting the Graph using Matplotlib
-plt.plot(time,data)
-plt.xlabel('Time [s]')
-plt.ylabel('Amplitude')
-plt.title('6TU5302374.wav')
-plt.show()
-
-
-
 
 print('success')
